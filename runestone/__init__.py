@@ -8,6 +8,7 @@ from .datafile import *
 from .disqus import *
 from .dragndrop import *
 from .fitb import *
+from .karel import *
 from .livecode import *
 from .meta import *
 from .parsons import *
@@ -110,6 +111,7 @@ cmap = {'activecode': ActiveCode,
         'datafile': DataFile,
         'disqus': DisqusDirective,
         'dragndrop': DragNDrop,
+        'karel': KarelDirective,
         'parsonsprob': ParsonsProblem,
         'poll': Poll,
         'reveal': RevealDirective,

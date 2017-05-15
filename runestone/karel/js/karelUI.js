@@ -8,6 +8,7 @@ $(document).ready(function() {
         var karelDrawer;
 
         var canvas = $(this).find(".world")[0];
+        var textarea = $(this).find(".codeArea")[0];
         world = new World();
         worldDrawer = new WorldDrawer(world, canvas);
         worldDrawer.draw();
@@ -15,8 +16,13 @@ $(document).ready(function() {
         karelDrawer = new KarelDrawer(karel, canvas);
         karelDrawer.draw();
 
+        var editor = CodeMirror.fromTextArea(textarea,{lineNumbers: true,
+            mode: "JavaScript", indentUnit: 4,
+            matchBrackets: true, autoMatchParens: true,
+            extraKeys: {"Tab": "indentMore", "Shift-Tab": "indentLess"}});
+
         $(this).find(".run-button").click(function () {
-            var program = $(this).find(".codeArea").val();
+            var program = editor.getValue();
             executeProgram(program);
         });
 
