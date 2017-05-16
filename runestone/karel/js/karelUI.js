@@ -2,19 +2,8 @@
 
 $(document).ready(function() {
     $('[data-component=karel]').each( function(index ) {
-        var karel;
-        var world;
-        var worldDrawer;
-        var karelDrawer;
-
         var canvas = $(this).find(".world")[0];
         var textarea = $(this).find(".codeArea")[0];
-        world = new World();
-        worldDrawer = new WorldDrawer(world, canvas);
-        worldDrawer.draw();
-        karel = new Karel(world);
-        karelDrawer = new KarelDrawer(karel, canvas);
-        karelDrawer.draw();
 
         var editor = CodeMirror.fromTextArea(textarea,{lineNumbers: true,
             mode: "JavaScript", indentUnit: 4,
@@ -26,35 +15,50 @@ $(document).ready(function() {
             executeProgram(program);
         });
 
-        $(this).find(".turnLeft-button").click(function () {
-            var program = "turnLeft();";
-            executeProgram(program);
+        $(this).find(".reset-button").click(function () {
+            reset();
         });
 
-        $(this).find(".move-button").click(function () {
-            var program = "move();";
-            executeProgram(program);
-        });
+        function outf(text){
+            console.log(text);
+        }
 
-        $(this).find(".draw-button").click(function () {
-            worldDrawer.draw();
-            karelDrawer.draw();
-        });
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
 
         function executeProgram(program) {
-            eval(program);
-            setTimeout(function () {
-                worldDrawer.draw();
-                karelDrawer.draw();
-            }, 1000);
+            Sk.configure({output: outf, read: builtinRead});
+            Sk.canvas = canvas;
+            Sk.externalLibraries = {
+                karel : {
+                    path: '_static/karel.js',
+                }
+            };
+            //Sk.pre = "edoutput";
+            try {
+                var myPromise = Sk.misceval.asyncToPromise(function() {
+                    return Sk.importMainWithBody("<stdin>",false,program,true);
+                });
+                myPromise.then(
+                    function(mod) {
+
+                    },
+                    function(err) {
+                        console.log(err.toString());
+                    }
+                );
+            } catch(e) {
+                outf(e.toString() + "\n")
+            }
         }
 
-        function turnLeft() {
-            karel.turnLeft();
+        function reset(){
+            executeProgram("import karel");
         }
 
-        function move() {
-            karel.move();
-        }
+        reset();
     });
 });

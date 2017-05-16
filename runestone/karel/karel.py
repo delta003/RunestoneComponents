@@ -15,11 +15,14 @@ def setup(app):
 
     app.add_javascript('codemirror.js')
     app.add_javascript('karelDirection.js')
-    app.add_javascript('karel.js')
+    app.add_javascript('karelMain.js')
     app.add_javascript('karelDrawer.js')
     app.add_javascript('karelWorld.js')
     app.add_javascript('karelWorldDrawer.js')
     app.add_javascript('karelUI.js')
+    app.add_javascript('skulpt.min.js')
+    app.add_javascript('skulpt-stdlib.js')
+    app.add_javascript('karel.js')
 
     app.add_node(KarelNode, html=(visit_karel_node, depart_karel_node))
 
@@ -33,7 +36,7 @@ TEMPLATE_START = """
 
 TEMPLATE_END = """
     <div data-component="karel" class="karel_section alert alert-warning">
-        <div class="karel_actions col-md-12"><button class="btn btn-success run-button">Run</button></div>
+        <div class="karel_actions col-md-12"><button class="btn btn-success run-button">Run</button><button class="btn reset-button">Reset</button></div>
         <div style="overflow: hidden;" class="karel_actions col-md-12" >
             <section class="col-md-7">
                 <article>
