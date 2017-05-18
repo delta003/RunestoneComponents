@@ -14,11 +14,17 @@ def setup(app):
     app.add_stylesheet('karel.css')
 
     app.add_javascript('codemirror.js')
-    app.add_javascript('karelDirection.js')
-    app.add_javascript('karelMain.js')
-    app.add_javascript('karelDrawer.js')
+    # app.add_javascript('karelDirection.js')
+    # app.add_javascript('karelMain.js')
+    # app.add_javascript('karelDrawer.js')
+    # app.add_javascript('karelWorld.js')
+    # app.add_javascript('karelWorldDrawer.js')
+
+    app.add_javascript('karelCorner.js')
+    app.add_javascript('karelRobot.js')
     app.add_javascript('karelWorld.js')
-    app.add_javascript('karelWorldDrawer.js')
+    app.add_javascript('karelRobotDrawer.js')
+
     app.add_javascript('karelUI.js')
     app.add_javascript('skulpt.min.js')
     app.add_javascript('skulpt-stdlib.js')
