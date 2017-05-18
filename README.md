@@ -15,7 +15,8 @@ List of Petlja customized components (including new components):
 List of unsuppored Runestone components:
 - note (use infonote instead)
 
-If you wish to use something else, please reach out to `markobakovic95@gmail.com` and ask for component customization.
+## Requesting a new component or customization of some not yet customized component
+Just submit an issue in this repo.
 
 ## Switching to Petlja Runestone
 - If you already have runestone, remove it with `pip uninstall runestone`
