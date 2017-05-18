@@ -105,7 +105,7 @@ $(document).ready(function() {
             //logRunEvent({'div_id': this.divid, 'code': this.prog, 'errinfo': err.toString()}); // Log the run event
             var errHead = $('<h3>').html('Error');
             var eContainer = outerDiv.appendChild(document.createElement('div'));
-            eContainer.className = 'error alert alert-danger';
+            eContainer.className = 'col-md-12 error alert alert-danger';
             eContainer.appendChild(errHead[0]);
             var errText = eContainer.appendChild(document.createElement('pre'));
             var errString = err.toString();
