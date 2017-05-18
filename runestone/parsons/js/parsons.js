@@ -88,7 +88,7 @@ LineBasedGrader.prototype.grade = function() {
 		answerArea.addClass("incorrect");
 		feedbackArea.fadeIn(500);
 		feedbackArea.attr("class", "alert alert-danger");
-		feedbackArea.html("Your program is too short.  Add more blocks.");
+		feedbackArea.html("Ваш програм је кратак. Додајте још блокова.");
 	} else {
 		// Determine whether the code is in the correct order
 		var isCorrectOrder = false;
@@ -119,11 +119,11 @@ LineBasedGrader.prototype.grade = function() {
 				feedbackArea.attr("class", "alert alert-success");
 				if (problem.checkCount > 1)
 				{
-				   feedbackArea.html("Perfect!  It took you " + problem.checkCount + " tries to solve this.  Click Reset to try to solve it in one attempt.");
+				   feedbackArea.html("Одлично!  Требало ти је " + problem.checkCount + " покушаја да решиш проблем");
 			    }
 			    else
 			    {
-			       feedbackArea.html("Perfect!  It took you only one try to solve this.  Great job!");
+			       feedbackArea.html("Решили сте проблем из првог покушаја. Честитамо!");
 			    }
 				correct = true;
 				problem.helpButton.disabled = true;
@@ -148,9 +148,9 @@ LineBasedGrader.prototype.grade = function() {
 				feedbackArea.fadeIn(500);
 				feedbackArea.attr("class", "alert alert-danger");
 				if (incorrectBlocks.length == 1) {
-					feedbackArea.html("This block is not indented correctly. Either indent it more by dragging it right or reduce the indention by dragging it left.");
+					feedbackArea.html("Блок није увучен исправно.");
 				} else {
-					feedbackArea.html("These blocks are not indented correctly. To indent a block more, drag it to the right. To reduce the indention, drag it to the left.");
+					feedbackArea.html("Блокови нису увучени исправно. Повуците их лево или десно.");
 				}
 			}
 		} else {
@@ -180,7 +180,7 @@ LineBasedGrader.prototype.grade = function() {
 			for (i = 0; i < notInSolution.length; i++) {
 				$(notInSolution[i].view).addClass("incorrectPosition");
 			}
-			feedbackArea.html("Highlighted blocks in your program are wrong or are in the wrong order. This can be fixed by moving, removing, or replacing highlighted blocks.");
+			feedbackArea.html("Блокови нису у исправно редоследу. Покушајте да промените редослед.");
 		}
 	}
 	return state;
@@ -1134,7 +1134,7 @@ Parsons.prototype.initializeOptions = function() {
 // Based on what is specified in the original HTML, create the HTML view
 Parsons.prototype.initializeView = function () {
 	this.containerDiv = document.createElement("div");
-	$(this.containerDiv).addClass("parsons alert alert-warning");
+	$(this.containerDiv).addClass("parsons");
 	this.containerDiv.id = this.counterId;
 	
 	this.parsTextDiv = document.createElement("div");
@@ -1160,7 +1160,7 @@ Parsons.prototype.initializeView = function () {
 	this.sourceLabel = document.createElement("div");
 	$(this.sourceLabel).attr("role", "tooltip");
 	this.sourceLabel.id = this.counterId + "-sourceTip";
-	this.sourceLabel.innerHTML = "Drag from here";
+	this.sourceLabel.innerHTML = "Одавде превуците блокове";
 	this.sourceRegionDiv.appendChild(this.sourceLabel);
 	this.sortContainerDiv.appendChild(this.sourceRegionDiv);
 
@@ -1176,7 +1176,7 @@ Parsons.prototype.initializeView = function () {
 	this.answerLabel = document.createElement("div");
 	$(this.answerLabel).attr("role", "tooltip");
 	this.answerLabel.id = this.counterId + "-answerTip";
-	this.answerLabel.innerHTML = "Drop blocks here";
+	this.answerLabel.innerHTML = "Овде превуците блокове";
 	this.answerRegionDiv.appendChild(this.answerLabel);
 	this.sortContainerDiv.appendChild(this.answerRegionDiv);
 
@@ -1192,7 +1192,7 @@ Parsons.prototype.initializeView = function () {
 	var that = this;
 	this.checkButton = document.createElement("button");
 	$(this.checkButton).attr("class", "btn btn-success");
-	this.checkButton.textContent = "Check Me";
+	this.checkButton.textContent = "Провери";
 	this.checkButton.id = this.counterId + "-check";
 	this.parsonsControlDiv.appendChild(this.checkButton);
 	this.checkButton.addEventListener('click', function(event) {
@@ -1201,7 +1201,7 @@ Parsons.prototype.initializeView = function () {
 	});	
 	this.resetButton = document.createElement("button");
 	$(this.resetButton).attr("class", "btn btn-default");
-	this.resetButton.textContent = "Reset";
+	this.resetButton.textContent = "Врати на почетак";
 	this.resetButton.id = this.counterId + "-reset";
 	this.parsonsControlDiv.appendChild(this.resetButton);
 	this.resetButton.addEventListener('click', function(event) {
@@ -1215,7 +1215,7 @@ Parsons.prototype.initializeView = function () {
 	if (this.options.adaptive) {
 		this.helpButton = document.createElement("button");
 		$(this.helpButton).attr("class", "btn btn-primary");
-		this.helpButton.textContent = "Help Me";
+		this.helpButton.textContent = "Помоћ";
 		this.helpButton.id = this.counterId + "-help";
 		this.helpButton.disabled = true;
 		this.parsonsControlDiv.appendChild(this.helpButton);

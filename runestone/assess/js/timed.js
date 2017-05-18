@@ -150,7 +150,7 @@ Timed.prototype.renderControlButtons = function () {
         "class": "btn btn-success",
         "id": "start"
     });
-    this.startBtn.textContent = "Start";
+    this.startBtn.textContent = "Започни";
     this.startBtn.addEventListener("click", function () {
         this.renderTimedQuestion();
         this.startAssessment();
@@ -160,7 +160,7 @@ Timed.prototype.renderControlButtons = function () {
         "id": "pause",
         "disabled":"true"
     });
-    this.pauseBtn.textContent = "Pause";
+    this.pauseBtn.textContent = "Пауза";
     this.pauseBtn.addEventListener("click", function () {
         this.pauseAssessment();
     }.bind(this), false);
@@ -270,9 +270,9 @@ Timed.prototype.renderSubmitButton = function () {
         "id": "finish",
         "class": "btn btn-inverse"
     });
-    this.finishButton.textContent = "Finish Exam";
+    this.finishButton.textContent = "Заврши тест";
     this.finishButton.addEventListener("click", function () {
-       if (window.confirm("Clicking OK means you are ready to submit your answers and are finished with this assessment.")) {
+       if (window.confirm("Кликом на ОК завршавате тест. Да ли сте сигурни?")) {
           this.finishAssessment();
        }
     }.bind(this), false);
@@ -504,7 +504,7 @@ Timed.prototype.increment = function () { // increments the timer
                 this.done = 1;
                 if (this.taken === 0) {
                     this.taken = 1;
-                    window.alert("Sorry, but you ran out of time.  Your current answers have been saved");
+                    window.alert("Истекло вам је време.");
                     this.finishAssessment();
                 }
             }

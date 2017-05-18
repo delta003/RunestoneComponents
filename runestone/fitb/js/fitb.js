@@ -135,7 +135,6 @@ FITB.prototype.createFITBElement = function () {
 FITB.prototype.renderFITBInput = function () {
     // creates the blank and appends it to the parent div
     this.containerDiv = document.createElement("div");
-    $(this.containerDiv).addClass("alert alert-warning");
     this.containerDiv.id = this.divid;
 
     this.blankArray = [];
@@ -159,7 +158,7 @@ FITB.prototype.renderFITBInput = function () {
 FITB.prototype.renderFITBButtons = function () {
     // "submit" button and "compare me" button
     this.submitButton = document.createElement("button");
-    this.submitButton.textContent = "Check Me";
+    this.submitButton.textContent = "Провери";
     $(this.submitButton).attr({
         "class": "btn btn-success",
         "name": "do answer"
@@ -178,7 +177,7 @@ FITB.prototype.renderFITBButtons = function () {
             "disabled": "",
             "name": "compare"
         });
-        this.compareButton.textContent = "Compare Me";
+        this.compareButton.textContent = "Упореди";
         this.compareButton.addEventListener("click", function () {
             this.compareFITBAnswers();
         }.bind(this), false);
@@ -321,7 +320,7 @@ FITB.prototype.populateDisplayFeed = function (index, given) {
 
 FITB.prototype.renderFITBFeedback = function () {
     if (this.correct) {
-        $(this.feedBackDiv).html("You are Correct!");
+        $(this.feedBackDiv).html("Тачно!");
         $(this.feedBackDiv).attr("class", "alert alert-success");
         for (var j = 0; j < this.blankArray.length; j++) {
             $(this.blankArray[j]).removeClass("input-validation-error");
@@ -330,7 +329,7 @@ FITB.prototype.renderFITBFeedback = function () {
         if (this.displayFeed === null) {
             this.displayFeed = "";
         }
-        $(this.feedBackDiv).html("Incorrect.    ");
+        $(this.feedBackDiv).html("Нетачно.    ");
         for (var j = 0; j < this.blankArray.length; j++) {
             if (!this.isCorrectArray[j]) {
                 $(this.blankArray[j]).addClass("input-validation-error");

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 __author__ = 'petlja'
 
 from docutils import nodes
@@ -31,12 +34,15 @@ def setup(app):
 
 
 TEMPLATE_START = """
-<div data-childcomponent="%(divid)s" class="explainer karel_section alert alert-warning">
+<div data-childcomponent=="%(divid)s" class="karel_section course-box course-box-problem">
+    <div class="course-content">
+        <p>
 """
 
 TEMPLATE_END = """
-    <div data-component="karel" class="karel_section alert alert-warning">
-        <div class="karel_actions col-md-12"><button class="btn btn-success run-button">Run</button><button class="btn reset-button">Reset</button></div>
+    <div data-component="karel" class="karel_section">
+        <div class="karel_actions col-md-12"><button class="btn btn-success run-button">Покрени код</button>
+        <button class="btn btn-default reset-button">Врати на почетак</button></div>
         <div style="overflow: hidden;" class="karel_actions col-md-12" >
             <section class="col-md-7">
                 <article>
@@ -53,7 +59,7 @@ TEMPLATE_END = """
         </div>
     </div>
     <p class="karel_caption karel_caption_text"> (%(divid)s)</p>
-</div>
+</p></div></div>
 
 """
 

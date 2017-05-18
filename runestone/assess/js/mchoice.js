@@ -135,7 +135,7 @@ MultipleChoice.prototype.createMCForm = function () {
 MultipleChoice.prototype.renderMCContainer = function () {
     this.containerDiv = document.createElement("div");
     $(this.containerDiv).html(this.question);
-    $(this.containerDiv).addClass("alert alert-warning");
+    // $(this.containerDiv).addClass("alert alert-warning");
     this.containerDiv.id = this.divid;
 };
 
@@ -213,7 +213,7 @@ MultipleChoice.prototype.renderMCFormButtons = function () {
     // submit and compare me buttons
     // Create submit button
     this.submitButton = document.createElement("button");
-    this.submitButton.textContent = "Check Me";
+    this.submitButton.textContent = "Провери";
     $(this.submitButton).attr({
         "class": "btn btn-success",
         "name": "do answer"
@@ -239,7 +239,7 @@ MultipleChoice.prototype.renderMCFormButtons = function () {
             "disabled": "",
             "name": "compare"
         });
-        this.compareButton.textContent = "Compare me";
+        this.compareButton.textContent = "Упореди";
         this.compareButton.addEventListener("click", function () {
             this.compareAnswers(this.divid);
         }.bind(this), false);
@@ -404,22 +404,22 @@ MultipleChoice.prototype.logMCMAsubmission = function (data) {
 
 
 MultipleChoice.prototype.renderMCMAFeedBack = function () {
-    var answerStr = "answers";
+    var answerStr = "орговора";
     var numGiven = this.givenArray.length;
     if (numGiven === 1) {
-        answerStr = "answer";
+        answerStr = "орговор";
     }
     var numCorrect = this.correctCount;
     var numNeeded = this.correctList.length;
     var feedbackText = this.feedbackString;
 
     if (numCorrect === numNeeded && numNeeded === numGiven) {
-        $(this.feedBackDiv).html("Correct!    <br />" + feedbackText);
+        $(this.feedBackDiv).html("Тачно!    <br />" + feedbackText);
         $(this.feedBackDiv).attr("class", "alert alert-success");
     } else {
-        $(this.feedBackDiv).html("Incorrect.    " + "You gave " + numGiven +
-            " " + answerStr + " and got " + numCorrect + " correct of " +
-            numNeeded + " needed.<br /> " + feedbackText);
+        $(this.feedBackDiv).html("Нетачно.    " + "Дали сте " + numGiven +
+            " " + answerStr + " и имате " + numCorrect + " тачна од " +
+            numNeeded + " потребна.<br /> " + feedbackText);
         $(this.feedBackDiv).attr("class", "alert alert-danger");
     }
 };
@@ -457,13 +457,13 @@ MultipleChoice.prototype.logMCMFsubmission = function () {
 
 MultipleChoice.prototype.renderMCMFFeedback = function (correct, feedbackText) {
     if (correct) {
-        $(this.feedBackDiv).html("Correct!    " + feedbackText);
+        $(this.feedBackDiv).html("Тачно!    " + feedbackText);
         $(this.feedBackDiv).attr("class", "alert alert-success");
     } else {
         if (feedbackText == null) {
             feedbackText = "";
         }
-        $(this.feedBackDiv).html("Incorrect.    " + feedbackText);
+        $(this.feedBackDiv).html("Нетачно.    " + feedbackText);
         $(this.feedBackDiv).attr("class", "alert alert-danger");
     }
 };

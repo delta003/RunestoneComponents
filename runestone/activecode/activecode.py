@@ -59,13 +59,17 @@ def setup(app):
 
 
 TEMPLATE_START = """
-<div data-childcomponent="%(divid)s" class="explainer ac_section alert alert-warning">
+<div data-childcomponent="%(divid)s" class="course-box course-box-problem">
+    <div class="course-content">
+        <p>
 """
 
 TEMPLATE_END = """
-<textarea data-component="activecode" id=%(divid)s data-lang="%(language)s" %(autorun)s %(hidecode)s %(include)s %(timelimit)s %(coach)s %(codelens)s data-audio='%(ctext)s' %(sourcefile)s %(datafile)s %(stdin)s %(gradebutton)s %(caption)s>
+<textarea data-component="activecode" style="margin-top: 50px;" id=%(divid)s data-lang="%(language)s" %(autorun)s %(hidecode)s %(include)s %(timelimit)s %(coach)s %(codelens)s data-audio='%(ctext)s' %(sourcefile)s %(datafile)s %(stdin)s %(gradebutton)s %(caption)s>
 %(initialcode)s
 </textarea>
+</p>
+</div>
 </div>
 """
 

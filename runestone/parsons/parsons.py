@@ -109,8 +109,11 @@ Example:
         addQuestionToDB(self)
 
         TEMPLATE = '''
+    <div class="course-box course-box-problem">
+        <div class="course-content">
     <pre data-component="parsons" id="%(divid)s"%(maxdist)s%(order)s%(noindent)s%(adaptive)s%(language)s>
         <span data-question>%(qnumber)s: %(instructions)s</span>%(code)s</pre>
+        </div></div>
     '''
         self.options['divid'] = self.arguments[0]
         self.options['qnumber'] = self.getNumber()

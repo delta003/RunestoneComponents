@@ -81,7 +81,7 @@ ActiveCode.prototype.createEditor = function (index) {
     this.containerDiv = document.createElement('div');
     var linkdiv = document.createElement('div');
     linkdiv.id = this.divid.replace(/_/g,'-').toLowerCase();  // :ref: changes _ to - so add this as a target
-    $(this.containerDiv).addClass("ac_section alert alert-warning");
+    $(this.containerDiv).addClass("ac_section");
     var codeDiv = document.createElement("div");
     $(codeDiv).addClass("ac_code_div col-md-12");
     this.codeDiv = codeDiv;
@@ -130,29 +130,29 @@ ActiveCode.prototype.createControls = function () {
     $(ctrlDiv).addClass("col-md-12");
     // Run
     var butt = document.createElement("button");
-    $(butt).text("Run");
+    $(butt).text("Покрени код");
     $(butt).addClass("btn btn-success run-button");
     ctrlDiv.appendChild(butt);
     this.runButton = butt;
     $(butt).click(this.runProg.bind(this));
 
-    if (! this.hidecode) {
-        var butt = document.createElement("button");
-        $(butt).text("Load History");
-        $(butt).addClass("btn btn-default");
-        ctrlDiv.appendChild(butt);
-        this.histButton = butt;
-        $(butt).click(this.addHistoryScrubber.bind(this));
-        if (this.graderactive) {
-            this.addHistoryScrubber(true);
-        }
-    }
+    // if (! this.hidecode) {
+    //     var butt = document.createElement("button");
+    //     $(butt).text("Load History");
+    //     $(butt).addClass("btn btn-default");
+    //     ctrlDiv.appendChild(butt);
+    //     this.histButton = butt;
+    //     $(butt).click(this.addHistoryScrubber.bind(this));
+    //     if (this.graderactive) {
+    //         this.addHistoryScrubber(true);
+    //     }
+    // }
 
 
     if ($(this.origElem).data('gradebutton') && ! this.graderactive) {
         butt = document.createElement("button");
-        $(butt).addClass("ac_opt btn btn-default");
-        $(butt).text("Show Feedback");
+        $(butt).addClass("ac_opt btn btn-info");
+        $(butt).text("Прикажи резултат");
         $(butt).css("margin-left","10px");
         this.gradeButton = butt;
         ctrlDiv.appendChild(butt);
@@ -162,8 +162,8 @@ ActiveCode.prototype.createControls = function () {
     if (this.hidecode) {
         $(this.runButton).attr('disabled', 'disabled');
         butt = document.createElement("button");
-        $(butt).addClass("ac_opt btn btn-default");
-        $(butt).text("Show Code");
+        $(butt).addClass("ac_opt btn btn-info");
+        $(butt).text("Прикажи код");
         $(butt).css("margin-left", "10px");
         this.showHideButt = butt;
         ctrlDiv.appendChild(butt);
@@ -174,10 +174,10 @@ ActiveCode.prototype.createControls = function () {
             } else {
                 $(this.historyScrubber.parentElement).toggle();
             }
-            if ($(this.showHideButt).text() == "Show Code") {
-                $(this.showHideButt).text("Hide Code");
+            if ($(this.showHideButt).text() == "Прикажи код") {
+                $(this.showHideButt).text("Затвори код");
             } else {
-                $(this.showHideButt).text("Show Code");
+                $(this.showHideButt).text("Прикажи код");
             }
             if ($(this.runButton).attr('disabled')) {
                 $(this.runButton).removeAttr('disabled');
@@ -190,8 +190,8 @@ ActiveCode.prototype.createControls = function () {
     // CodeLens
     if ($(this.origElem).data("codelens") && ! this.graderactive) {
         butt = document.createElement("button");
-        $(butt).addClass("ac_opt btn btn-default");
-        $(butt).text("Show CodeLens");
+        $(butt).addClass("ac_opt btn btn-info");
+        $(butt).text("Корак по корак");
         $(butt).css("margin-left", "10px");
         this.clButton = butt;
         ctrlDiv.appendChild(butt);
@@ -505,10 +505,10 @@ ActiveCode.prototype.showCodelens = function () {
 
     if (this.codelens.style.display == 'none') {
         this.codelens.style.display = 'block';
-        this.clButton.innerText = "Hide Codelens";
+        this.clButton.innerText = "Затвори корак по корак";
     } else {
         this.codelens.style.display = "none";
-        this.clButton.innerText = "Show in Codelens";
+        this.clButton.innerText = "Корак по корак";
         return;
     }
 
