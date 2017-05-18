@@ -8,7 +8,7 @@ List of Petlja customized components (including new components):
 - dragndrop
 - fillintheblank
 - karel (new)
-- infonote (new)
+- infonote (new) (use instead of note)
 - parsonsprob
 
 If you wish to use something else, please reach out to `markobakovic95@gmail.com` and ask for component customization.
