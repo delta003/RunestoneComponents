@@ -17,11 +17,6 @@ def setup(app):
     app.add_stylesheet('karel.css')
 
     app.add_javascript('codemirror.js')
-    # app.add_javascript('karelDirection.js')
-    # app.add_javascript('karelMain.js')
-    # app.add_javascript('karelDrawer.js')
-    # app.add_javascript('karelWorld.js')
-    # app.add_javascript('karelWorldDrawer.js')
 
     app.add_javascript('karelCorner.js')
     app.add_javascript('karelRobot.js')
@@ -52,7 +47,8 @@ TEMPLATE_END = """
         <div style="overflow: hidden;" class="karel_actions col-md-12" >
             <section class="col-md-7">
                 <article>
-                    <textarea class="codeArea" id=%(divid)s name="code" rows="10" style="width: 100%%;height:300px">%(initialcode)s</textarea>
+                    <textarea class="codeArea" id=%(divid)s name="code" rows="10" style="width: 100%%;height:300px"></textarea>
+                    <textarea class="configArea" style="display:none">%(initialcode)s</textarea>
                 </article>
             </section>
             <section class="col-md-5">

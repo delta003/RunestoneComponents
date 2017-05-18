@@ -44,6 +44,7 @@ $(document).ready(function() {
         var outerDiv = $(this)[0];
         var canvas = $(this).find(".world")[0];
         var textarea = $(this).find(".codeArea")[0];
+        var configarea = $(this).find(".configArea")[0];
 
         var editor = CodeMirror.fromTextArea(textarea,{lineNumbers: true,
             mode: "JavaScript", indentUnit: 4,
@@ -51,7 +52,7 @@ $(document).ready(function() {
             extraKeys: {"Tab": "indentMore", "Shift-Tab": "indentLess"}});
 
         $(this).find(".run-button").click(function () {
-            var program = editor.getValue();
+            var program = 'from karel import *\n' + editor.getValue();
             executeProgram(program);
         });
 
@@ -72,6 +73,11 @@ $(document).ready(function() {
         function executeProgram(program) {
             Sk.configure({output: outf, read: builtinRead});
             Sk.canvas = canvas;
+
+			var drawer = new RobotDrawer(canvas, 200);
+			var config = (new Function('return '+configarea.value))();
+
+            Sk.Karel = {drawer: drawer, config: config};
             Sk.externalLibraries = {
                 karel : {
                     path: '_static/karel.js',
@@ -81,14 +87,15 @@ $(document).ready(function() {
             try {
                 clearError();
                 var myPromise = Sk.misceval.asyncToPromise(function() {
+					drawer.start();
                     return Sk.importMainWithBody("<stdin>",false,program,true);
                 });
                 myPromise.then(
                     function(mod) {
-
+						drawer.stop();
                     },
                     function(err) {
-                        //console.log(err.toString());
+						drawer.stop();
                         showError(err.toString());
                     }
                 );
@@ -105,7 +112,7 @@ $(document).ready(function() {
             //logRunEvent({'div_id': this.divid, 'code': this.prog, 'errinfo': err.toString()}); // Log the run event
             var errHead = $('<h3>').html('Error');
             var eContainer = outerDiv.appendChild(document.createElement('div'));
-            eContainer.className = 'error alert alert-danger';
+            eContainer.className = 'col-md-12 error alert alert-danger';
             eContainer.appendChild(errHead[0]);
             var errText = eContainer.appendChild(document.createElement('pre'));
             var errString = err.toString();

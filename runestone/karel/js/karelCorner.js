@@ -7,7 +7,7 @@ var Corner = (function () {
         this.wallToEast = false;
     }
 
-    Corner.prototype.clone = function(){
+    Corner.prototype.clone = function() {
         var c = new Corner(this.avenue, this.street);
 
         c.avenue = this.avenue;
@@ -44,4 +44,4 @@ var Corner = (function () {
     };
 
     return Corner;
-});
+})();

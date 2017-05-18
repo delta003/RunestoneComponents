@@ -1,23 +1,3 @@
-/*
-//Class World
-function World() {
-    this.size = { rows: 9, cols: 9 };
-    this.boardWidth = 0;
-    this.boardHeight = 0;
-}
-World.prototype.getSize = function () {
-    return this.size;
-};
-World.prototype.getCellSize = function () {
-    return {w:this.boardWidth / this.cols,h:this.boardHeight / this.rows};
-};
-World.prototype.getCellCenter = function (row, col) {
-    var cellWidth=this.boardWidth / this.size.cols;
-    var cellHeight = this.boardHeight / this.size.rows;
-    return { x:(col*cellWidth) + (cellWidth/2) , y: (row* cellHeight) + (cellHeight/2) };
-};
-*/
-
 var World = (function () {
     function World(avenues, streets) {
         this.numAvenues = avenues;
@@ -40,7 +20,7 @@ var World = (function () {
         this.addNSWall(avenues, 1, streets);
     }
 
-    World prototype.clone = function(
+    World.prototype.clone = function() {
         var w = new World(this.numAvenues, this.numStreets);
         w.corners = [];
         w.robotStartAvenue = this.robotStartAvenue;
@@ -49,16 +29,16 @@ var World = (function () {
         w.robotStartDirection = this.robotStartDirection;
         w.robotStartBalls = this.robotStartBalls;
 
-        for(var av=0; av<avenues; av++){
+        for(var av=0; av<this.numAvenues; av++){
             var avenue = [];
-            for(var st=0; st<streets; st++){
+            for(var st=0; st<this.numStreets; st++){
                 avenue.push(this.getCorner(av+1, st+1).clone());
             }
             w.corners.push(avenue);
         }
 
         return w;
-    );
+    }
 
     World.prototype.getAvenues = function () {
         return this.numAvenues;
@@ -85,11 +65,11 @@ var World = (function () {
     };
 
     World.prototype.checkNSWall = function (eastOfAvenue, atStreet) {
-        return getCorner(eastOfAvenue, atStreet).hasNorthWall();
+        return this.getCorner(eastOfAvenue, atStreet).hasNorthWall();
     };
 
     World.prototype.checkEWWall = function (atAvenue, northOfStreet) {
-        return getCorner(atAvenue, northOfStreet).hasEastWall();
+        return this.getCorner(atAvenue, northOfStreet).hasEastWall();
     };
 
     World.prototype.getRobotStartAvenue = function () {
@@ -176,5 +156,5 @@ var World = (function () {
     };
 
     return World;
-});
+})();
 

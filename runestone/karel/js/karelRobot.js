@@ -23,7 +23,7 @@ var Robot = (function () {
         this.world = w;
         this.location.x = w.getRobotStartAvenue();
         this.location.y = w.getRobotStartStreet();
-        this.direction = w.getRobotDirection();
+        this.direction = w.getRobotStartDirection();
     };
 
     Robot.prototype.getWorld = function () {
@@ -133,16 +133,16 @@ var Robot = (function () {
         var isDirBlocked = false;
         switch (this.getDirection()) {
             case "N":
-                isDirBlocked = this.world.checkNSWall(this.getAvenue(), this.getStreet());
-                break;
-            case "E":
                 isDirBlocked = this.world.checkEWWall(this.getAvenue(), this.getStreet());
                 break;
+            case "E":
+                isDirBlocked = this.world.checkNSWall(this.getAvenue(), this.getStreet());
+                break;
             case "S":
-                isDirBlocked = this.getStreet()===1 ? true : this.world.checkNSWall(this.getAvenue(), this.getStreet()-1);
+                isDirBlocked = this.getStreet()===1 ? true : this.world.checkEWWall(this.getAvenue(), this.getStreet()-1);
                 break;
             case "W":
-                isDirBlocked = this.getAvenue()===1 ? true : this.world.checkEWWall(this.getAvenue()-1, this.getStreet());
+                isDirBlocked = this.getAvenue()===1 ? true : this.world.checkNSWall(this.getAvenue()-1, this.getStreet());
                 break;
         }
         return !isDirBlocked;
@@ -175,4 +175,4 @@ var Robot = (function () {
     };
 
     return Robot;
-});
+})();
