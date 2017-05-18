@@ -31,7 +31,11 @@ def setup(app):
     app.add_node(DragNDropNode, html=(visit_dnd_node, depart_dnd_node))
 
 
-TEMPLATE_START = """<ul data-component="dragndrop" id="%(divid)s">
+TEMPLATE_START = """
+    <div id="%(divid)s" class="course-box course-box-problem">
+        <div class="course-content">
+            <p>
+    <ul data-component="dragndrop" id="%(divid)s">
     <span data-component="question">%(question)s</span>
 	%(feedback)s
 """
@@ -40,7 +44,8 @@ TEMPLATE_OPTION = """
     <li data-component="draggable" id="%(divid)s_drag%(dnd_label)s">%(dragText)s</li>
     <li data-component="dropzone" for="%(divid)s_drag%(dnd_label)s">%(dropText)s</li>
 """
-TEMPLATE_END = """</ul>"""
+TEMPLATE_END = """</ul>
+            </p></div></div>"""
 
 
 class DragNDropNode(nodes.General, nodes.Element):

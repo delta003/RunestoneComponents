@@ -154,6 +154,9 @@ class MChoice(Assessment):
             """
 
         TEMPLATE_START = '''
+            <div id="%(divid)s" class="course-box course-box-question">
+                <div class="course-content">
+                    <p>
             <ul data-component="multiplechoice" data-multipleanswers="%(multipleAnswers)s" %(random)s id="%(divid)s">
             '''
 
@@ -165,6 +168,7 @@ class MChoice(Assessment):
         TEMPLATE_END = '''
 
             </ul>
+            </p></div></div>
             '''
         addQuestionToDB(self)
         super(MChoice,self).run()

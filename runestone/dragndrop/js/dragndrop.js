@@ -78,7 +78,7 @@ DragNDrop.prototype.populate = function () {
 ========================================*/
 DragNDrop.prototype.createNewElements = function () {
     this.containerDiv = document.createElement("div");
-    $(this.containerDiv).addClass("alert alert-warning draggable-container");
+    $(this.containerDiv).addClass("draggable-container");
     $(this.containerDiv).text(this.question);
     this.containerDiv.appendChild(document.createElement("br"));
 
@@ -146,7 +146,7 @@ DragNDrop.prototype.addDragDivListeners = function () {
 DragNDrop.prototype.createButtons = function () {
     this.buttonDiv = document.createElement("div");
     this.submitButton = document.createElement("button");    // Check me button
-    this.submitButton.textContent = "Check Me";
+    this.submitButton.textContent = "Провери";
     $(this.submitButton).attr({
         "class": "btn btn-success drag-button",
         "name": "do answer",
@@ -156,8 +156,8 @@ DragNDrop.prototype.createButtons = function () {
         this.dragEval(true);
     }.bind(this);
 
-    this.resetButton = document.createElement("button");    // Check me button
-    this.resetButton.textContent = "Reset";
+    this.resetButton = document.createElement("button");    // Reset me button
+    this.resetButton.textContent = "Врати на почетну позицију";
     $(this.resetButton).attr({
         "class": "btn btn-default drag-button drag-reset",
         "name": "do answer",
@@ -349,10 +349,10 @@ DragNDrop.prototype.renderFeedback = function () {
     }
     this.feedBackDiv.style.display = "block";
     if (this.correct) {
-        $(this.feedBackDiv).html("You are correct!");
+        $(this.feedBackDiv).html("Тачно!");
         $(this.feedBackDiv).attr("class", "alert alert-success draggable-feedback");
     } else {
-        $(this.feedBackDiv).html("Incorrect. " + "You got " + this.correctNum + " correct and " + this.incorrectNum + " incorrect out of " + this.dragNum + ". You left " + this.unansweredNum + " blank. " + this.feedback);
+        $(this.feedBackDiv).html("Нетачно. " + "Добили сте " + this.correctNum + " тачних и " + this.incorrectNum + " нетачних од " + this.dragNum + ". Остало вам је " + this.unansweredNum + " празнина. " + this.feedback);
         $(this.feedBackDiv).attr("class", "alert alert-danger draggable-feedback");
     }
 };

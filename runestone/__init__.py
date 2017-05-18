@@ -18,6 +18,7 @@ from .shortanswer import *
 from .tabbedStuff import *
 from .usageAssignment import *
 from .video import *
+from .notes import *
 from .server.chapternames import populateChapterInfo
 
 import os, sys
@@ -121,5 +122,7 @@ cmap = {'activecode': ActiveCode,
         'video': Video,
         'youtube': Youtube,
         'vimeo': Vimeo,
-        'usageassignment': usageAssignment
+        'usageassignment': usageAssignment,
+        'infonote': InfoNoteDirective,
+        'questionnote': QuestionNoteDirective
         }

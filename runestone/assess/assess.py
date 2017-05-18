@@ -59,14 +59,16 @@ class AddButton(Directive):
             """
 
         TEMPLATE_START = '''
-            <div id="%(divid)s" class="alert alert-warning">
+            <div id="%(divid)s" class="course-box course-box-question">
+                <div class="course-content">
+                    <p>
             <form name="%(divid)s_form" method="get" action="" onsubmit="return false;">
             '''
 
         TEMPLATE_END = '''
             <button class='btn btn-inverse' name="reset" onclick="resetPage('%(divid)s')">Forget My Answers</button>
             </form>
-            </div>
+            </p></div></div>
             '''
 
         self.options['divid'] = self.arguments[0]

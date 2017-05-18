@@ -20,8 +20,9 @@
 }
 
 .karel_caption {
-    text-align: center;
-    font-weight: bold;
+    text-align: right;
+    font-weight: normal;
+	font-size: 0.5em;
 }
 
 .karel_caption_text {
