@@ -67,7 +67,7 @@ class InfoNoteDirective(Directive):
         return [innode]
 
 TEMPLATE_START_Q = """
-    <div class="course-box">
+    <div class="course-box course-box-special">
         <div class="course-content">
             <h4 class="carbox-title">
                 <img class="corner-image pull-right" src="_static/question-mark.png" />
