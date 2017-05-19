@@ -47,12 +47,14 @@ $(document).ready(function() {
         var configarea = $(this).find(".configArea")[0];
 
         var editor = CodeMirror.fromTextArea(textarea,{lineNumbers: true,
-            mode: "JavaScript", indentUnit: 4,
+            mode: "Python", indentUnit: 4,
             matchBrackets: true, autoMatchParens: true,
             extraKeys: {"Tab": "indentMore", "Shift-Tab": "indentLess"}});
 
+		editor.setValue('from karel import *\n');
+
         $(this).find(".run-button").click(function () {
-            var program = 'from karel import *\n' + editor.getValue();
+            var program = editor.getValue();
             executeProgram(program);
         });
 
@@ -70,7 +72,7 @@ $(document).ready(function() {
             return Sk.builtinFiles["files"][x];
         }
 
-        function executeProgram(program) {
+        function executeProgram(program, skipValidation) {
             Sk.configure({output: outf, read: builtinRead});
             Sk.canvas = canvas;
 
@@ -92,7 +94,18 @@ $(document).ready(function() {
                 });
                 myPromise.then(
                     function(mod) {
-						drawer.stop();
+						drawer.stop(function(){
+							if(!skipValidation && Sk.Karel.config.isSuccess){
+								var robot = Sk.Karel.robot;
+								var world = robot.getWorld();
+								var result = Sk.Karel.config.isSuccess(robot, world);
+								if(result){
+									showEndMessageSuccess();
+								} else {
+									showEndMessageError();
+								}
+							}
+						});
                     },
                     function(err) {
 						drawer.stop();
@@ -105,8 +118,22 @@ $(document).ready(function() {
         }
 
         function reset(){
-            executeProgram("import karel");
+            executeProgram("import karel", true);
         }
+
+		function showEndMessageSuccess(){
+            var eContainer = outerDiv.appendChild(document.createElement('div'));
+            eContainer.className = 'col-md-12 alert alert-success';
+            var msgHead = $('<p>').html('Тачно! Тачно!');
+            eContainer.appendChild(msgHead[0]);
+		}
+
+		function showEndMessageError(){
+            var eContainer = outerDiv.appendChild(document.createElement('div'));
+            eContainer.className = 'col-md-12 alert alert-danger';
+            var msgHead = $('<p>').html('Нетачно.');
+            eContainer.appendChild(msgHead[0]);
+		}
 
         function showError(err) {
             //logRunEvent({'div_id': this.divid, 'code': this.prog, 'errinfo': err.toString()}); // Log the run event
@@ -119,18 +146,25 @@ $(document).ready(function() {
             var to = errString.indexOf(":");
             var errName = errString.substring(0, to);
             errText.innerHTML = errString;
-            $(eContainer).append('<h3>Description</h3>');
-            var errDesc = eContainer.appendChild(document.createElement('p'));
-            errDesc.innerHTML = errorText[errName];
-            $(eContainer).append('<h3>To Fix</h3>');
-            var errFix = eContainer.appendChild(document.createElement('p'));
-            errFix.innerHTML = errorText[errName + 'Fix'];
-            var moreInfo = '../ErrorHelp/' + errName.toLowerCase() + '.html';
+			var desc = errorText[errName];
+			var fix = errorText[errName+'Fix'];
+			if(desc){
+				$(eContainer).append('<h3>Description</h3>');
+				var errDesc = eContainer.appendChild(document.createElement('p'));
+				errDesc.innerHTML = desc;
+			}
+			if(fix){
+				$(eContainer).append('<h3>To Fix</h3>');
+				var errFix = eContainer.appendChild(document.createElement('p'));
+				errFix.innerHTML = fix;
+			}
+            //var moreInfo = '../ErrorHelp/' + errName.toLowerCase() + '.html';
             //console.log("Runtime Error: " + err.toString());
         };
 
         function clearError(){
-            $(outerDiv).find(".error").remove();
+            $(outerDiv).find(".alert-success").remove();
+            $(outerDiv).find(".alert-danger").remove();
         }
 
         reset();

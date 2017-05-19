@@ -6,8 +6,12 @@ var $builtinmodule = function(name)
 
     var config = Sk.Karel.config;
 
-    var robot = new Robot();
-    robot.setWorld(config.getWorld());
+	var setup = config.setup();
+    var robot = setup.robot;
+	var world = setup.world;
+    robot.setWorld(world);
+
+	Sk.Karel.robot = robot;
 
     drawer.drawFrame(robot);
 

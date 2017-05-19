@@ -11,6 +11,7 @@ var RobotDrawer = (function () {
 
     function start(){
         if(this.intervalHandle){
+			this.onstop = null;
             clearInterval(this.intervalHandle);
         }
         this.frames = [];
@@ -19,8 +20,9 @@ var RobotDrawer = (function () {
         this.intervalHandle = setInterval(function(){draw.call(self);}, this.sleep);
     }
 
-    function stop(){
+    function stop(onstop){
         this.isRunning = false;
+		this.onstop = onstop;
     }
 
     function addFrame(robot){
@@ -31,6 +33,9 @@ var RobotDrawer = (function () {
         if(this.frames.length===0){
             if(!this.isRunning && this.intervalHandle){
                 clearInterval(this.intervalHandle);
+				if(this.onstop){
+					this.onstop();
+				}
             }
             return;
         }
@@ -57,6 +62,8 @@ var RobotDrawer = (function () {
         this.scale_y = Math.min(this.scale_x, this.scale_y);
         this.cell_width = this.scale_x;
         this.cell_height = this.scale_y;
+		this.translate_x = (this.width - this.scale_x * (world.getAvenues()+1)) / 2;
+		this.translate_y = (this.height - this.scale_y * (world.getStreets()+1)) / 2;
         this.wall_width = 3;
     }
 
