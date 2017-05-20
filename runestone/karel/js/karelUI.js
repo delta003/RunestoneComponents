@@ -51,7 +51,15 @@ $(document).ready(function() {
             matchBrackets: true, autoMatchParens: true,
             extraKeys: {"Tab": "indentMore", "Shift-Tab": "indentLess"}});
 
-		editor.setValue('from karel import *\n');
+		var config = (new Function('return '+configarea.value))();
+
+		var code = config.setup().code;
+
+		code = (code ?
+			(code.length ? code.join("\n") : code)
+			: "from karel import * \n");
+
+		editor.setValue(code);
 
         $(this).find(".run-button").click(function () {
             var program = editor.getValue();
@@ -77,7 +85,6 @@ $(document).ready(function() {
             Sk.canvas = canvas;
 
 			var drawer = new RobotDrawer(canvas, 200);
-			var config = (new Function('return '+configarea.value))();
 
             Sk.Karel = {drawer: drawer, config: config};
             Sk.externalLibraries = {
