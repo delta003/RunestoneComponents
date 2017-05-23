@@ -23,7 +23,8 @@ body {
 
 /* Box */
 .course-box {
-  display: block;
+    display: block;
+    margin-top: 20px;
     margin-bottom: 20px;
     line-height: 1.42857143;
     background-color: #fff;

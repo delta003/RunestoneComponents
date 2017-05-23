@@ -394,14 +394,14 @@ ExecutionVisualizer.prototype.render = function() {
     '<div id="codeDisplayDiv">\
        <div id="langDisplayDiv"></div>\
        <div id="pyCodeOutputDiv"/>\
-       <div id="editCodeLinkDiv"><a id="editBtn">Edit code</a></div>\
+       <div id="editCodeLinkDiv"><a id="editBtn">Уреди код</a></div>\
        <div id="executionSlider"/>\
        <div id="vcrControls">\
-         <button id="jmpFirstInstr", type="button">&lt;&lt; First</button>\
-         <button id="jmpStepBack", type="button">&lt; Back</button>\
-         <span id="curInstr">Step ? of ?</span>\
-         <button id="jmpStepFwd", type="button">Forward &gt;</button>\
-         <button id="jmpLastInstr", type="button">Last &gt;&gt;</button>\
+         <button id="jmpFirstInstr", type="button">&lt;&lt; Почетак</button>\
+         <button id="jmpStepBack", type="button">&lt; Претходни корак</button>\
+         <span id="curInstr">Корак ? од ?</span>\
+         <button id="jmpStepFwd", type="button">Наредни корак &gt;</button>\
+         <button id="jmpLastInstr", type="button">Крај &gt;&gt;</button>\
        </div>\
        <div id="rawUserInputDiv">\
          <span id="userInputPromptStr"/>\
@@ -414,13 +414,13 @@ ExecutionVisualizer.prototype.render = function() {
          <textarea class="annotationText" id="stepAnnotationEditor" cols="60" rows="3"></textarea>\
          <div class="annotationText" id="stepAnnotationViewer"></div>\
        </div>\
-       <div id="annotateLinkDiv"><button id="annotateBtn" type="button">Annotate this step</button></div>\
+       <div id="annotateLinkDiv"><button id="annotateBtn" type="button">Означи овај корак</button></div>\
      </div>';
 
   var outputsHTML =
     '<div id="htmlOutputDiv"></div>\
      <div id="progOutputs">\
-       Program output:<br/>\
+       Излаз програма:<br/>\
        <textarea id="pyStdout" cols="50" rows="10" wrap="off" readonly></textarea>\
      </div>';
 
@@ -430,13 +430,13 @@ ExecutionVisualizer.prototype.render = function() {
          <tr>\
            <td id="stack_td">\
              <div id="globals_area">\
-               <div id="stackHeader">Frames</div>\
+               <div id="stackHeader">Оквири</div>\
              </div>\
              <div id="stack"></div>\
            </td>\
            <td id="heap_td">\
              <div id="heap">\
-               <div id="heapHeader">Objects</div>\
+               <div id="heapHeader">Објекти</div>\
              </div>\
            </td>\
          </tr>\
@@ -484,8 +484,8 @@ ExecutionVisualizer.prototype.render = function() {
 
   if (this.params.arrowLines) {
       this.domRoot.find('#legendDiv')
-          .append('<svg id="prevLegendArrowSVG"/> line that has just executed')
-          .append('<p style="margin-top: 4px"><svg id="curLegendArrowSVG"/> next line to execute</p>');
+          .append('<svg id="prevLegendArrowSVG"/> линија која је управо извршена')
+          .append('<p style="margin-top: 4px"><svg id="curLegendArrowSVG"/> линија која ће следећа бити извршена</p>');
       
       myViz.domRootD3.select('svg#prevLegendArrowSVG')
           .append('polygon')
@@ -499,8 +499,8 @@ ExecutionVisualizer.prototype.render = function() {
   }
   else if (this.params.highlightLines) {
       myViz.domRoot.find('#legendDiv')
-          .append('<span class="highlight-legend highlight-prev">line that has just executed</span> ')
-          .append('<span class="highlight-legend highlight-cur">next line to execute</span>')
+          .append('<span class="highlight-legend highlight-prev">линија која је управо извршена</span> ')
+          .append('<span class="highlight-legend highlight-cur">линија која ће следећа бити извршена</span>')
   }
   else if (this.params.pyCrazyMode) {
       myViz.domRoot.find('#legendDiv')
@@ -1521,19 +1521,19 @@ ExecutionVisualizer.prototype.updateOutputFull = function(smoothTransition) {
 
   if (isLastInstr) {
     if (this.promptForUserInput || this.promptForMouseInput) {
-      vcrControls.find("#curInstr").html('<b><font color="' + brightRed + '">Enter user input:</font></b>');
+      vcrControls.find("#curInstr").html('<b><font color="' + brightRed + '">Унеси податке:</font></b>');
     }
     else if (this.instrLimitReached) {
-      vcrControls.find("#curInstr").html("Instruction limit reached");
+      vcrControls.find("#curInstr").html("Досегнут максимални број инструкција");
     }
     else {
-      vcrControls.find("#curInstr").html("Program terminated");
+      vcrControls.find("#curInstr").html("Програм се завршио");
     }
   }
   else {
-    vcrControls.find("#curInstr").html("Step " +
+    vcrControls.find("#curInstr").html("Корак " +
                                        String(this.curInstr + 1) +
-                                       " of " + String(totalInstrs-1));
+                                       " од " + String(totalInstrs-1));
   }
 
 

@@ -42,7 +42,7 @@ TEMPLATE_START = """
 
 TEMPLATE_END = """
     <div data-component="karel" class="karel_section">
-        <div class="karel_actions col-md-12"><button class="btn btn-success run-button">Покрени код</button>
+        <div class="karel_actions col-md-12"><button class="btn btn-success run-button">Покрени програм</button>
         <button class="btn btn-default reset-button">Врати на почетак</button></div>
         <div style="overflow: hidden;" class="karel_actions col-md-12" >
             <section class="col-md-7">

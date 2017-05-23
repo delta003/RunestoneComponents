@@ -130,7 +130,7 @@ ActiveCode.prototype.createControls = function () {
     $(ctrlDiv).addClass("col-md-12");
     // Run
     var butt = document.createElement("button");
-    $(butt).text("Покрени код");
+    $(butt).text("Покрени програм");
     $(butt).addClass("btn btn-success run-button");
     ctrlDiv.appendChild(butt);
     this.runButton = butt;

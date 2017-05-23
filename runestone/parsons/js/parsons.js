@@ -180,7 +180,7 @@ LineBasedGrader.prototype.grade = function() {
 			for (i = 0; i < notInSolution.length; i++) {
 				$(notInSolution[i].view).addClass("incorrectPosition");
 			}
-			feedbackArea.html("Блокови нису у исправно редоследу. Покушајте да промените редослед.");
+			feedbackArea.html("Блокови нису у исправном редоследу. Покушајте да промените редослед.");
 		}
 	}
 	return state;
