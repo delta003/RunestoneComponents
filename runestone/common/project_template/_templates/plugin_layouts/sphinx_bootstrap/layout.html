@@ -52,11 +52,34 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/">{% if theme_navbar_title -%}{{ theme_navbar_title|e }}{%- else -%}{{ project|e }}{%- endif -%}</a></li>
+        <li><a href="http://bubblebee.petlja.org">BubbleBee</a></li>
+        <li><a href="http://takprog.petlja.org">Takprog</a></li>
+        <li><a href="http://algora.petlja.org">Algora</a></li>
+        <li><a href="http://bubblecup.petlja.org">BubbleCup X</a></li>
+
+        <li><a href="http://bubblebee.petlja.org/OsnovnaSkola">Osnovna škola (demo)</a></li>
+
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="Calendar">Kalendar dešavanja</a></li>
+                <li><a href="About">O nama</a></li>
+            </ul>
+        </li>
       </ul>
+
     </div>
   </div>
 </nav>
+
+<div class="container col-md-8 col-md-offset-2 navbar-fixed-top" style="top:60px;">
+    <ul class="col-md-12 breadcrumb">
+                <li><a href="http://petlja.org">Petlja</a></li>
+                <li><a href="http://petlja.org/OsnovnaSkola">Osnovna škola</a></li>
+                <li class="active">{% if theme_navbar_title -%}{{ theme_navbar_title|e }}{%- else -%}{{ project|e }}{%- endif -%}</li>
+            </ul>
+</div>
+
 {% endmacro %}
 
 {%- block extrahead %}
@@ -104,7 +127,12 @@
 {% block sidebarsourcelink %}{% endblock %}
 
 {%- block content %}
-{{ navBar() }}
+{{
+
+    navBar()
+
+}}
+
 
 <div class="container col-md-12" id="continue-reading"></div>
 
