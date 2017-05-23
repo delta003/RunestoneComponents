@@ -153,8 +153,8 @@ var Robot = (function () {
     };
 
     Robot.prototype.pickBall = function () {
-        return this.world.pickBall(this.getAvenue(), this.getStreet());
         this.setBalls(this.getBalls()+1);
+        return this.world.pickBall(this.getAvenue(), this.getStreet());
     };
 
     Robot.prototype.putBall = function () {

@@ -47,19 +47,15 @@ $(document).ready(function() {
         var configarea = $(this).find(".configArea")[0];
 
         var editor = CodeMirror.fromTextArea(textarea,{lineNumbers: true,
-            mode: "Python", indentUnit: 4,
+            mode: "python", indentUnit: 4,
             matchBrackets: true, autoMatchParens: true,
             extraKeys: {"Tab": "indentMore", "Shift-Tab": "indentLess"}});
-
-		var config = (new Function('return '+configarea.value))();
-
-		var code = config.setup().code;
-
-		code = (code ?
-			(code.length ? code.join("\n") : code)
-			: "from karel import * \n");
-
-		editor.setValue(code);
+	var config = (new Function('return '+configarea.value))();
+	var code = config.setup().code;
+	code = (code ?
+		(code.length ? code.join("\n") : code)
+		: "from karel import * \n");
+	editor.setValue(code);
 
         $(this).find(".run-button").click(function () {
             var program = editor.getValue();

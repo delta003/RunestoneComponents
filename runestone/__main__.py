@@ -8,8 +8,8 @@ import click
 from paver.easy import sh
 from pkg_resources import resource_string, resource_filename, require
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 
 @click.group(chain=True)
 def cli():
