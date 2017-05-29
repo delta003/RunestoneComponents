@@ -57,7 +57,7 @@
         <li><a href="http://algora.petlja.org">Algora</a></li>
         <li><a href="http://bubblecup.petlja.org">BubbleCup X</a></li>
 
-        <li><a href="http://bubblebee.petlja.org/OsnovnaSkola">Osnovna škola (demo)</a></li>
+        <li><a href="http://petlja.org/OsnovnaSkola">Osnovna škola (demo)</a></li>
 
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="caret"></span></a>
@@ -76,7 +76,7 @@
     <ul class="col-md-12 breadcrumb">
                 <li><a href="http://petlja.org">Petlja</a></li>
                 <li><a href="http://petlja.org/OsnovnaSkola">Osnovna škola</a></li>
-                <li class="active">{% if theme_navbar_title -%}{{ theme_navbar_title|e }}{%- else -%}{{ project|e }}{%- endif -%}</li>
+        <li class="active"><a href="{{ pathto(master_doc) }}">{% if theme_navbar_title -%}{{ theme_navbar_title|e }}{%- else -%}{{ project|e }}{%- endif -%}</a></li>
             </ul>
 </div>
 
