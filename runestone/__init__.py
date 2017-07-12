@@ -22,6 +22,7 @@ from .notes import *
 from .server.chapternames import populateChapterInfo
 
 import os, sys
+import platform
 
 def runestone_static_dirs():
     basedir = os.path.dirname(__file__)
@@ -44,6 +45,10 @@ def runestone_extensions():
 
 from paver.easy import task, cmdopts, sh
 from sphinxcontrib import paverutils
+
+if platform.system() != "Linux":
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
 
 @task
 @cmdopts([
