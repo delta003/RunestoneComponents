@@ -36,7 +36,21 @@ var $builtinmodule = function(name)
 
 	function ballsPresent() {
 		return robot.ballsPresent();
+	}
+
+    function getBalls() {
+	return robot.getBalls();
     }
+
+    function hasBalls() {
+	return robot.getBalls() != 0;
+    }
+    
+
+    function countBalls() {
+	return robot.countBalls();
+    }
+    
 
 	function pickBall() {
 		robot.pickBall();
@@ -48,33 +62,96 @@ var $builtinmodule = function(name)
 		drawer.addFrame(robot.clone());
 	}
 
+    function showMessage(m) {
+	robot.turnMessagesOn();
+	robot.show(m);
+	drawer.addFrame(robot.clone());
+	robot.turnMessagesOff();
+    }
+
     mod.turnLeft = new Sk.builtin.func(function() {
         return turnLeft();
     });
 
-	mod.turnRight = new Sk.builtin.func(function() {
+    mod.levo = mod.turnLeft;
+    
+
+    mod.turnRight = new Sk.builtin.func(function() {
         return turnRight();
     });
+
+    mod.desno = mod.turnRight;
+    
 
     mod.move = new Sk.builtin.func(function() {
         return move();
     });
 
-	mod.frontIsClear = new Sk.builtin.func(function() {
+    mod.napred = mod.move;
+    
+
+    mod.frontIsClear = new Sk.builtin.func(function() {
         return frontIsClear();
     });
+    
+    mod.moze_napred = mod.frontIsClear;
+    mod.mozeNapred = mod.frontIsClear;
+    
+    mod.getBalls = new Sk.builtin.func(function() {
+	return Sk.builtin.int_(getBalls());
+    });
 
-	mod.ballsPresent = new Sk.builtin.func(function() {
+    mod.broj_loptica_kod_sebe = mod.getBalls;
+    mod.brojLopticaKodSebe = mod.getBalls;
+
+    mod.hasBalls = new Sk.builtin.func(function() {
+	return hasBalls();
+    });
+
+    mod.ima_loptica_kod_sebe = mod.hasBalls;
+    mod.imaLopticaKodSebe = mod.hasBalls;
+    
+
+    mod.countBalls = new Sk.builtin.func(function() {
+	return Sk.builtin.int_(countBalls());
+    });
+    
+    mod.broj_loptica_na_polju = mod.countBalls;
+    mod.brojLopticaNaPolju = mod.countBalls;
+
+    mod.ballsPresent = new Sk.builtin.func(function() {
         return ballsPresent();
     });
 
-	mod.pickBall = new Sk.builtin.func(function() {
+    mod.ima_loptica_na_polju = mod.ballsPresent;
+    mod.imaLopticaNaPolju = mod.ballsPresent;
+
+    mod.pickBall = new Sk.builtin.func(function() {
         return pickBall();
     });
 
-	mod.putBall = new Sk.builtin.func(function() {
+    mod.uzmi_lopticu = mod.pickBall;
+    mod.uzmiLopticu = mod.pickBall;
+    mod.uzmi = mod.pickBall;
+    
+
+    mod.putBall = new Sk.builtin.func(function() {
         return putBall();
     });
+
+    mod.ostavi_lopticu = mod.putBall;
+    mod.ostaviLopticu = mod.putBall;
+    mod.ostavi = mod.putBall;
+
+    mod.show = new Sk.builtin.func(function(a) {
+	if (a instanceof Sk.builtin.int_ ||
+	    a instanceof Sk.builtin.str)
+	    showMessage(a.v);
+    });
+    mod.showMessage = mod.show;
+    mod.message = mod.show;
+    mod.reci = mod.show;
+    mod.izgovori = mod.show;
 
     return mod;
 }

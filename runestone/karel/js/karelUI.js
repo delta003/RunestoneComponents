@@ -80,7 +80,7 @@ $(document).ready(function() {
             Sk.configure({output: outf, read: builtinRead});
             Sk.canvas = canvas;
 
-			var drawer = new RobotDrawer(canvas, 200);
+	    var drawer = new RobotDrawer(canvas, 500);
 
             Sk.Karel = {drawer: drawer, config: config};
             Sk.externalLibraries = {
@@ -116,7 +116,7 @@ $(document).ready(function() {
                     }
                 );
             } catch(e) {
-                outf(e.toString() + "\n")
+                outf("Error: " + e.toString() + "\n")
             }
         }
 
@@ -127,7 +127,7 @@ $(document).ready(function() {
 		function showEndMessageSuccess(){
             var eContainer = outerDiv.appendChild(document.createElement('div'));
             eContainer.className = 'col-md-12 alert alert-success';
-            var msgHead = $('<p>').html('Тачно! Тачно!');
+            var msgHead = $('<p>').html('Тачно!');
             eContainer.appendChild(msgHead[0]);
 		}
 
@@ -162,7 +162,7 @@ $(document).ready(function() {
 				errFix.innerHTML = fix;
 			}
             //var moreInfo = '../ErrorHelp/' + errName.toLowerCase() + '.html';
-            //console.log("Runtime Error: " + err.toString());
+            console.log("Runtime Error: " + err.toString());
         };
 
         function clearError(){

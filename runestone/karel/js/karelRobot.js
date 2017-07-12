@@ -4,6 +4,7 @@ var Robot = (function () {
         this.direction = "N";
         this.numBalls = 0;
         this.infiniteBalls = false;
+	this.messagesOn = false;
         this.lastMessage = "";
     }
 
@@ -15,6 +16,7 @@ var Robot = (function () {
         r.numBalls = 0;
         r.infiniteBalls = this.infiniteBalls;
         r.lastMessage = this.lastMessage;
+	r.messagesOn = this.messagesOn;
         r.world = this.world.clone();
         return r;
     }
@@ -157,6 +159,10 @@ var Robot = (function () {
         return this.world.pickBall(this.getAvenue(), this.getStreet());
     };
 
+    Robot.prototype.countBalls = function () {
+	return this.world.getBalls(this.getAvenue(), this.getStreet());
+    };
+
     Robot.prototype.putBall = function () {
         if((this.getBalls()===0) && (!this.inifiniteBalls)){
             throw "No balls with Karel";
@@ -170,6 +176,14 @@ var Robot = (function () {
         this.lastMessage = s;
     };
 
+    Robot.prototype.turnMessagesOn = function() {
+	this.messagesOn = true;
+    };
+
+    Robot.prototype.turnMessagesOff = function() {
+	this.messagesOn = false;
+    }
+    
     Robot.prototype.getLastMessage = function () {
         return this.lastMessage;
     };

@@ -1,10 +1,57 @@
+var KarelImages = (function() {
+    function KarelImages() {
+	this.loadedImageCount = 0;
+	
+	var that = this;
+	function onImageLoad() {
+	    that.loadedImageCount++;
+	    console.log('Loaded image: ', that.loadedImageCount);
+	}
+
+	this.imageNames = ['north', 'south', 'east', 'west', 'ball', 'hole'];
+	this.imageArray = {};
+
+	for (var i = 0; i < this.imageNames.length; i++) {
+	    var name = this.imageNames[i];
+	    this.imageArray[name] = new Image();
+	    this.imageArray[name].onload = onImageLoad;
+	    this.imageArray[name].src = '_static/karel-' + name + '.png';
+	}
+    }
+
+    function images() {
+	return this.imageArray;
+    }
+
+    function loaded() {
+	return this.loadedImageCount >= 6;
+    }
+
+    var instance = null;
+
+    function create() {
+	instance = new KarelImages();
+	instance.loaded = loaded;
+	instance.images = images;
+	return instance;
+    }
+
+    function get() {
+	if (!instance)
+	    instance = create();
+	return instance;
+    }
+
+    return {get: get};
+}());
+
 var RobotDrawer = (function () {
     function RobotDrawer(canvas, sleep) {
         this.frames = [];
         this.height = canvas.height;
         this.width = canvas.width;
         this.context = canvas.getContext("2d");
-        this.sleep = sleep || 500;
+        this.sleep = sleep || 1000;
         this.intervalHandle = null;
         this.isRunning = false;
     }
@@ -30,7 +77,7 @@ var RobotDrawer = (function () {
     }
 
     function draw(){
-        if(this.frames.length===0){
+        if(this.frames.length===0) {
             if(!this.isRunning && this.intervalHandle){
                 clearInterval(this.intervalHandle);
 				if(this.onstop){
@@ -39,17 +86,28 @@ var RobotDrawer = (function () {
             }
             return;
         }
+
         var robot = this.frames.pop();
         drawFrame.call(this, robot);
     }
 
     function drawFrame(robot){
-		this.context.clearRect(0 ,0 ,this.width ,this.height);
-		computeScale.call(this, robot);
+	console.log('Trying to draw...');
+	if (!KarelImages.get().loaded()) {
+	    console.log('Delay until images are loaded...');
+	    setTimeout(drawFrame.bind(this, robot), 100);
+	    return;
+	}
+	console.log('Success...');
+	
+	this.context.clearRect(0 ,0 ,this.width ,this.height);
+	computeScale.call(this, robot);
         drawGrid.call(this, robot);
         drawWalls.call(this, robot);
-        drawRobot.call(this, robot);
         drawBalls.call(this, robot);
+        drawRobot.call(this, robot);
+	if (robot.getLastMessage() != "" && robot.messagesOn)
+	    alert(robot.getLastMessage());
     }
 
     function computeScale(robot){
@@ -146,75 +204,77 @@ var RobotDrawer = (function () {
 
     function drawRobot(robot){
         var ctx = this.context;
-        var w = this.cell_width / 2;
-        var h = this.cell_height / 2;
-        var face = h / 3;
-        ctx.fillStyle = "blue";
+        var w = 0.5 * this.cell_width;
+        var h = 0.9 * this.cell_height;
         var pt = worldToScreen.call(this, robot.getAvenue(), robot.getStreet());
-        pt.x = pt.x - h / 2;
-        pt.y = pt.y - w / 2;
-        ctx.fillRect(pt.x, pt.y, w, h);
+        pt.x = pt.x - w / 2;
+        pt.y = pt.y - h / 2;
 
-        ctx.fillStyle = "red";
+	var img;
+
         switch(robot.getDirection()){
             case "E":
-                ctx.fillRect(pt.x + w - face, pt.y, face, h);
+	        img = KarelImages.get().images().east;
                 break;
             case "N":
-                ctx.fillRect(pt.x, pt.y, w, face);
+  	        img = KarelImages.get().images().north;
                 break;
             case "S":
-                ctx.fillRect(pt.x, pt.y + h - face, w, face);
+	        img = KarelImages.get().images().south;
                 break;
             case "W":
-                ctx.fillRect(pt.x, pt.y, face, h);
+	        img = KarelImages.get().images().west;
                 break;
+        }	
 
-        }
+        ctx.drawImage(img, pt.x, pt.y, w, h);
     }
 
     function drawBalls(robot){
         var world = robot.getWorld();
         var ctx = this.context;
 
-        var ball_width = this.cell_width / 2;
-        var ball_height = this.cell_height / 2;
-        var x_offset = ball_width / 2;
-        var y_offset = ball_height / 2;
 
         for(var a=1; a<=world.getAvenues();a++){
             for(var s=1; s<=world.getStreets();s++){
                 if(world.checkBall(a, s) || world.checkHole(a, s)){
                     var pt = worldToScreen.call(this, a, s);
-                    var fillStyle = "";
-                    var fontStyle = "";
+		    var img, width, height;
                     if(world.checkBall(a, s)){
-                        fillStyle = "green";
-                        fontStyle = "white";
-                    } else {
-                        fillStyle = "yellow";
+			width = 0.4 * this.cell_width;
+			height = 0.4 * this.cell_height;
+			img = KarelImages.get().images().ball;
                         fontStyle = "black";
+                    } else {
+			width = 0.8 * this.cell_width;
+			height = 0.8 * this.cell_height;
+			img = KarelImages.get().images().hole;
+                        fontStyle = "white";
                     }
+		    ctx.drawImage(img, pt.x - width / 2, pt.y - height / 2, width, height);
+		    
                     var fontSize = 15;
-                    ctx.fillStyle = fillStyle;
-                    ctx.beginPath();
-                    drawEllipseByCenter(ctx, pt.x, pt.y, ball_width, ball_height);
-                    ctx.fill();
                     var nb = Math.abs(world.getBalls(a, s)).toString();
-                    ctx.fillStyle = fontStyle;
-                    ctx.font = fontSize+"px Arial";
-                    while(Math.pow(ctx.measureText(nb).width,2)+Math.pow(getTextHeight(ctx.font).height,2) > ball_width * ball_height){
-                        fontSize-=1;
-                        ctx.font = fontSize+"px Arial";
-                    }
+
+		    while(true) {
+			ctx.fillStyle = fontStyle;
+			ctx.font = fontSize + "px Arial";
+			var text_width = ctx.measureText(nb).width;
+			var text_height = getTextHeight(ctx.font).height;
+			if (fontSize <= 5) break;
+			if (Math.pow(text_width, 2) + Math.pow(text_height, 2) <= width * height)
+			    break;
+			fontSize--;
+		    }
                     ctx.fillText(nb, pt.x - ctx.measureText(nb).width/2, pt.y + getTextHeight(ctx.font).descent);
                 }
             }
         }
     }
 
-	var getTextHeight = function(font) {
-		var text = $('<span>Hg</span>').css({ fontFamily: font });
+    var getTextHeight = function(font) {
+	        font = font.split(" ");
+	var text = $('<span>Hg</span>').css({ fontFamily: font[1], fontSize: font[0] });
 		var block = $('<div style="display: inline-block; width: 1px; height: 0px;"></div>');
 
 		var div = $('<div></div>');
@@ -224,7 +284,6 @@ var RobotDrawer = (function () {
 		body.append(div);
 
 		try {
-
 			var result = {};
 
 			block.css({ verticalAlign: 'baseline' });

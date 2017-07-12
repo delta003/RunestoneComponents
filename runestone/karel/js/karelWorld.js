@@ -109,42 +109,41 @@ var World = (function () {
     };
 
     World.prototype.checkBall = function (a, s) {
-        return this.getCorner(a,s).getBalls() > 0;
+        return this.getBalls(a, s) > 0;
     };
 
     World.prototype.checkHole = function (a, s) {
-        return this.getCorner(a,s).getBalls() < 0;
+        return this.getBalls(a, s) < 0;
     };
 
     World.prototype.pickBall = function (a, s) {
-        var c = this.getCorner(a,s);
-        if(c.getBalls()>0){
-            c.setBalls(c.getBalls()-1);
-            return true;
-        }
+	if (this.getBalls(a, s) > 0) {
+	    this.setBalls(a, s, this.getBalls(a, s) - 1);
+	    return true;
+	}
         throw "No ball at corner";
     };
 
     World.prototype.putBall = function (a, s) {
-        var c = this.getCorner(a,s);
-        c.setBalls(c.getBalls()+1);
+	this.setBalls(a, s, this.getBalls(a, s) + 1);
     };
 
     World.prototype.putBalls = function (a, s, n) {
-        for(var i=0; i<n; i++){
+        for(var i=0; i<n; i++)
             this.putBall(a, s);
-        }
     };
 
     World.prototype.putHole = function (a, s) {
-        var c = this.getCorner(a,s);
-        c.setBalls(c.getBalls()-1);
+	this.setBalls(a, s, this.getBalls(a, s) - 1);
     };
 
     World.prototype.putHoles = function (a, s, n) {
-        for(var i=0; i<n; i++){
+        for(var i=0; i<n; i++)
             this.putHole(a, s);
-        }
+    };
+
+    World.prototype.setBalls = function (a, s, n) {
+        return this.getCorner(a,s).setBalls(n);
     };
 
     World.prototype.getBalls = function (a, s) {
