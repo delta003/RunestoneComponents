@@ -47,9 +47,9 @@ def runestone_extensions():
 from paver.easy import task, cmdopts, sh
 from sphinxcontrib import paverutils
 
-if platform.system() != "Linux":
-    reload(sys)
-    sys.setdefaultencoding('utf-8')
+#if platform.system() != "Linux":
+#    reload(sys)
+#    sys.setdefaultencoding('utf-8')
 
 @task
 @cmdopts([
