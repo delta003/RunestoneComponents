@@ -45,13 +45,13 @@ TEMPLATE_END = """
         <div class="karel_actions col-md-12"><button class="btn btn-success run-button">Покрени програм</button>
         <button class="btn btn-default reset-button">Врати на почетак</button></div>
         <div style="overflow: hidden;" class="karel_actions col-md-12" >
-            <section class="col-md-7">
+            <section class="col-md-12">
                 <article>
                     <textarea class="codeArea" id=%(divid)s name="code" rows="10" style="width: 100%%;height:300px"></textarea>
                     <textarea class="configArea" style="display:none">%(initialcode)s</textarea>
                 </article>
             </section>
-            <section class="col-md-5">
+            <section class="col-md-12">
                 <article>
                     <canvas class="world" style="border-style: solid; border-width: 2px; border-color: inherit; background: white;" width="300" height="300">
                         <p>Please try loading this page in HTML5 enabled web browsers. All the latest versions of famous browsers such as Internet explorer, Chrome, Firefox, Opera support HTML5.</p>
