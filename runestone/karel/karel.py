@@ -35,19 +35,19 @@ def setup(app):
 
 
 TEMPLATE_START = """
-<div data-childcomponent=="%(divid)s" class="karel_section course-box course-box-problem">
+<div data-childcomponent="%(divid)s" class="karel_section course-box course-box-problem">
     <div class="course-content">
         <p>
 """
 
 TEMPLATE_END = """
-    <div data-component="karel" class="karel_section">
+    <div data-component="karel" id="%(divid)s" class="karel_section">
         <div class="karel_actions col-md-12"><button class="btn btn-success run-button">Покрени програм</button>
         <button class="btn btn-default reset-button">Врати на почетак</button></div>
         <div style="overflow: hidden;" class="karel_actions col-md-12" >
             <section class="col-md-12">
                 <article>
-                    <textarea class="codeArea" id=%(divid)s name="code" rows="10" style="width: 100%%;height:300px"></textarea>
+                    <textarea class="codeArea" id="%(divid)s" name="code" rows="10" style="width: 100%%;height:300px"></textarea>
                     <textarea class="configArea" style="display:none">%(initialcode)s</textarea>
                 </article>
             </section>
