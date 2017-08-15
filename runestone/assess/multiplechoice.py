@@ -22,6 +22,7 @@ from .assessbase import *
 import json
 import random
 from runestone.server.componentdb import addQuestionToDB, addHTMLToDB
+import mistune
 
 
 class MChoiceNode(nodes.General, nodes.Element):
@@ -63,9 +64,9 @@ def depart_mc_node(self,node):
         if 'answer_' in k:
             x,label = k.split('_')
             node.mc_options['alabel'] = label
-            node.mc_options['atext'] = "(" +k[-1].upper() + ") " + node.mc_options[k]
+            node.mc_options['atext'] = "(" +k[-1].upper() + ") " + mistune.markdown(node.mc_options[k])[3:-5]
             currFeedback = "feedback_" + label
-            node.mc_options['feedtext'] = node.mc_options.get(currFeedback,"") #node.mc_options[currFeedback]
+            node.mc_options['feedtext'] = mistune.markdown(node.mc_options.get(currFeedback,""))[3:-5] #node.mc_options[currFeedback]
             if label in node.mc_options['correct']:
                 node.mc_options["is_correct"] = "data-correct"
             else:
