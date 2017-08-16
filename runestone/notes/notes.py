@@ -142,6 +142,9 @@ TEMPLATE_END_L = """
     </div><!-- end level -->
 """
 
+TEMPLATE_END_L_BREAK = """
+    </div><!-- end level --></div><div>
+"""
 
 class LevelStartNode(nodes.General, nodes.Element):
     def __init__(self, content):
@@ -210,7 +213,11 @@ def visit_level_end_node(self, node):
 
 
 def depart_level_end_node(self, node):
-    res = TEMPLATE_END_L
+    if 'break' in node.note:
+        res = TEMPLATE_END_L_BREAK
+    else:
+        res = TEMPLATE_END_L
+        
     self.body.append(res)
     self.body.remove(node.delimiter)
 
@@ -222,6 +229,10 @@ class LevelEndDirective(Directive):
     required_arguments = 0
     optional_arguments = 0
     has_content = True
+
+    option_spec = {
+        'break':directives.flag,
+    }
 
     def run(self):
         """
