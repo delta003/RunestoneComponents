@@ -135,7 +135,7 @@ TEMPLATE_START_L = """
 """
 
 TEMPLATE_START_L_BREAK = """
-    <!-- start level --></div><div class="rst-level rst-level-%(complexity)s"><div>
+    <!-- start level --></div><div class="rst-level rst-level-%(complexity)s"><div style="display:none">
 """
 
 TEMPLATE_END_L = """
