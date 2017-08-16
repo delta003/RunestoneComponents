@@ -7,16 +7,15 @@ from docutils.parsers.rst import Directive
 
 def setup(app):
     app.add_stylesheet('notes.css')
+    app.add_javascript('notes.js')
 
     app.add_directive('infonote', InfoNoteDirective)
     app.add_directive('questionnote', QuestionNoteDirective)
-    app.add_directive('levelstart', LevelStartDirective)
-    app.add_directive('levelend', LevelEndDirective)
+    app.add_directive('level', LevelDirective)
 
     app.add_node(InfoNoteNode, html=(visit_info_note_node, depart_info_note_node))
     app.add_node(QuestionNoteNode, html=(visit_question_note_node, depart_question_note_node))
-    app.add_node(LevelStartNode, html=(visit_level_start_node, depart_level_start_node))
-    app.add_node(LevelEndNode, html=(visit_level_end_node, depart_level_end_node))
+    app.add_node(LevelNode, html=(visit_level_node, depart_level_node))
 
 
 TEMPLATE_START = """
@@ -130,108 +129,51 @@ class QuestionNoteDirective(Directive):
 
         return [qnnode]
 
-TEMPLATE_START_L = """
-    <!-- start level --><div class="rst-level rst-level-%(complexity)s">
+TEMPLATE_START_L_CONTAINER = """
+    <div class="rst-level rst-level-%(complexity)s">
 """
 
-TEMPLATE_START_L_BREAK = """
-    <!-- start level --></div><div class="rst-level rst-level-%(complexity)s"><div style="display:none">
+TEMPLATE_START_L = """
+    <div data-level="%(complexity)s" style="display:none">
 """
 
 TEMPLATE_END_L = """
-    </div><!-- end level -->
+    </div>
 """
 
-TEMPLATE_END_L_BREAK = """
-    </div><!-- end level --></div><div>
-"""
-
-class LevelStartNode(nodes.General, nodes.Element):
+class LevelNode(nodes.General, nodes.Element):
     def __init__(self, content):
-        super(LevelStartNode, self).__init__()
+        super(LevelNode, self).__init__()
         self.note = content
 
 
-def visit_level_start_node(self, node):
-    node.delimiter = "_start__{}_".format("levelstart")
+def visit_level_node(self, node):
+    node.delimiter = "_start__{}_".format("level")
     self.body.append(node.delimiter)
 
-    if 'break' in node.note:
-        res = TEMPLATE_START_L_BREAK % node.note
+    if 'container' in node.note:
+        res = TEMPLATE_START_L_CONTAINER % node.note
     else:
         res = TEMPLATE_START_L % node.note
-    
-    #res = TEMPLATE_START_L
     self.body.append(res)
+ 
 
-
-def depart_level_start_node(self, node):
+def depart_level_node(self, node):
     res = TEMPLATE_END_L
-    #self.body.append(res)
-    self.body.remove(node.delimiter)
-
-
-class LevelStartDirective(Directive):
-    """
-.. levelstart::
-    """
-    required_arguments = 0
-    optional_arguments = 0
-    has_content = True
-    option_spec = {
-        'complexity':directives.unchanged,
-        'break':directives.flag,
-    }
-
-    def run(self):
-        """
-        generate html to include level box.
-        :param self:
-        :return:
-        """
-
-        env = self.state.document.settings.env
-        self.options['source'] = "\n".join(self.content)
-
-        innode = LevelStartNode(self.options)
-
-        self.state.nested_parse(self.content, self.content_offset, innode)
-
-        return [innode]
-
-class LevelEndNode(nodes.General, nodes.Element):
-    def __init__(self, content):
-        super(LevelEndNode, self).__init__()
-        self.note = content
-
-
-def visit_level_end_node(self, node):
-    node.delimiter = "_start__{}_".format("levelend")
-    self.body.append(node.delimiter)
-    res = TEMPLATE_START_L
-    #self.body.append(res)
-
-
-def depart_level_end_node(self, node):
-    if 'break' in node.note:
-        res = TEMPLATE_END_L_BREAK
-    else:
-        res = TEMPLATE_END_L
-        
     self.body.append(res)
     self.body.remove(node.delimiter)
+ 
 
-
-class LevelEndDirective(Directive):
+class LevelDirective(Directive):
     """
-.. levelend::
+.. level:: 2
+    :container:
     """
-    required_arguments = 0
+    required_arguments = 1
     optional_arguments = 0
     has_content = True
-
     option_spec = {
-        'break':directives.flag,
+        'container':directives.flag,
     }
 
     def run(self):
@@ -243,8 +185,9 @@ class LevelEndDirective(Directive):
 
         env = self.state.document.settings.env
         self.options['source'] = "\n".join(self.content)
+        self.options['complexity'] = self.arguments[0]
 
-        innode = LevelEndNode(self.options)
+        innode = LevelNode(self.options)
 
         self.state.nested_parse(self.content, self.content_offset, innode)
 
