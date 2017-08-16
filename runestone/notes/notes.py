@@ -1,15 +1,22 @@
 __author__ = 'petlja'
 
 from docutils import nodes
+from docutils.parsers.rst import directives
 from docutils.parsers.rst import Directive
 
 
 def setup(app):
+    app.add_stylesheet('notes.css')
+
     app.add_directive('infonote', InfoNoteDirective)
     app.add_directive('questionnote', QuestionNoteDirective)
+    app.add_directive('levelstart', LevelStartDirective)
+    app.add_directive('levelend', LevelEndDirective)
 
     app.add_node(InfoNoteNode, html=(visit_info_note_node, depart_info_note_node))
     app.add_node(QuestionNoteNode, html=(visit_question_note_node, depart_question_note_node))
+    app.add_node(LevelStartNode, html=(visit_level_start_node, depart_level_start_node))
+    app.add_node(LevelEndNode, html=(visit_level_end_node, depart_level_end_node))
 
 
 TEMPLATE_START = """
@@ -122,3 +129,112 @@ class QuestionNoteDirective(Directive):
         self.state.nested_parse(self.content, self.content_offset, qnnode)
 
         return [qnnode]
+
+TEMPLATE_START_L = """
+    <!-- start level --><div class="rst-level rst-level-%(complexity)s">
+"""
+
+TEMPLATE_START_L_BREAK = """
+    <!-- start level --></div><div class="rst-level rst-level-%(complexity)s"><div>
+"""
+
+TEMPLATE_END_L = """
+    </div><!-- end level -->
+"""
+
+
+class LevelStartNode(nodes.General, nodes.Element):
+    def __init__(self, content):
+        super(LevelStartNode, self).__init__()
+        self.note = content
+
+
+def visit_level_start_node(self, node):
+    node.delimiter = "_start__{}_".format("levelstart")
+    self.body.append(node.delimiter)
+
+    if 'break' in node.note:
+        res = TEMPLATE_START_L_BREAK % node.note
+    else:
+        res = TEMPLATE_START_L % node.note
+    
+    #res = TEMPLATE_START_L
+    self.body.append(res)
+
+
+def depart_level_start_node(self, node):
+    res = TEMPLATE_END_L
+    #self.body.append(res)
+    self.body.remove(node.delimiter)
+
+
+class LevelStartDirective(Directive):
+    """
+.. levelstart::
+    """
+    required_arguments = 0
+    optional_arguments = 0
+    has_content = True
+    option_spec = {
+        'complexity':directives.unchanged,
+        'break':directives.flag,
+    }
+
+    def run(self):
+        """
+        generate html to include level box.
+        :param self:
+        :return:
+        """
+
+        env = self.state.document.settings.env
+        self.options['source'] = "\n".join(self.content)
+
+        innode = LevelStartNode(self.options)
+
+        self.state.nested_parse(self.content, self.content_offset, innode)
+
+        return [innode]
+
+class LevelEndNode(nodes.General, nodes.Element):
+    def __init__(self, content):
+        super(LevelEndNode, self).__init__()
+        self.note = content
+
+
+def visit_level_end_node(self, node):
+    node.delimiter = "_start__{}_".format("levelend")
+    self.body.append(node.delimiter)
+    res = TEMPLATE_START_L
+    #self.body.append(res)
+
+
+def depart_level_end_node(self, node):
+    res = TEMPLATE_END_L
+    self.body.append(res)
+    self.body.remove(node.delimiter)
+
+
+class LevelEndDirective(Directive):
+    """
+.. levelend::
+    """
+    required_arguments = 0
+    optional_arguments = 0
+    has_content = True
+
+    def run(self):
+        """
+        generate html to include level box.
+        :param self:
+        :return:
+        """
+
+        env = self.state.document.settings.env
+        self.options['source'] = "\n".join(self.content)
+
+        innode = LevelEndNode(self.options)
+
+        self.state.nested_parse(self.content, self.content_offset, innode)
+
+        return [innode]
