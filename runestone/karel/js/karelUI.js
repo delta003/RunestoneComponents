@@ -50,7 +50,7 @@ $(document).ready(function() {
             mode: "python", indentUnit: 4,
             matchBrackets: true, autoMatchParens: true,
             extraKeys: {"Tab": "indentMore", "Shift-Tab": "indentLess"}});
-	var config = (new Function('return '+configarea.value))();
+	var config = (new Function('return '+configarea.value.replace('<!--x','').replace('x-->','')))();
 	var code = config.setup().code;
 	code = (code ?
 		(code.length ? code.join("\n") : code)

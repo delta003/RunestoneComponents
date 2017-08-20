@@ -48,7 +48,7 @@ TEMPLATE_END = """
             <section class="col-md-12">
                 <article>
                     <textarea class="codeArea" id="%(divid)s" name="code" rows="10" style="width: 100%%;height:300px"></textarea>
-                    <textarea class="configArea" style="display:none">%(initialcode)s</textarea>
+                    <textarea class="configArea" style="display:none"><!--x %(initialcode)s x--></textarea>
                 </article>
             </section>
             <section class="col-md-12">
