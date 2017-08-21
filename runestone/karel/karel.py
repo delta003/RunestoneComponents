@@ -130,7 +130,7 @@ class KarelDirective(Directive):
         else:
             source = '\n'
 
-        self.options['initialcode'] = source
+        self.options['initialcode'] = source.replace("<", "&lt;")
         str = source.replace("\n", "*nline*")
         str0 = str.replace("\"", "*doubleq*")
         str1 = str0.replace("(", "*open*")
